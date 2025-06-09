@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { Header } from './header/header';
-import { UserInput, UserInputs } from './user-input/user-input';
+import { UserInput } from './user-input/user-input';
 import { InvestmentResult } from './investment-result/investment-result';
+import { InvestmentResults, UserInputs } from '../app.module';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,12 @@ import { InvestmentResult } from './investment-result/investment-result';
 })
 export class App {
   protected title = 'my-angular-app';
-  results: any = [];
+  //previous method
+  //results: any = [];
+  //Use Of Signals
+  results = signal<InvestmentResults[] | undefined>(undefined);
   calculateInvestmentResults(data: UserInputs) {
+    console.log(data);
     const annualData = [];
     let investmentValue = data.initailInvestment;
 
@@ -35,8 +40,11 @@ export class App {
           data.initailInvestment + data.anualContribution * year,
       });
     }
+
     console.log(annualData);
-    this.results = annualData;
-    return annualData;
+    //previous method
+    //this.results = annualData;
+    //Use Of Signals
+    this.results.set(annualData);
   }
 }

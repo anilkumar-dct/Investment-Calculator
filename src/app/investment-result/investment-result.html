@@ -1,4 +1,4 @@
-@if(result && result.length > 0) {
+@if(result() && result()!.length > 0) {
 <table>
   <thead>
     <tr>
@@ -10,13 +10,15 @@
     </tr>
   </thead>
   <tbody>
-    @for (data of result; track data.year) {
+    <!-- @for (data of result; track data.year) { previous method -->
+    @for (data of result(); track data.year) {
+    <!-- new method use of signal-->
     <tr>
       <td>{{data.year}}</td>
-      <td>{{data.valueEndOfYear.toFixed(2)}}</td>
-      <td>{{data.interest.toFixed(2)}}</td>
-      <td>{{data.totalInterest.toFixed(2)}}</td>
-      <td>{{data.totalAmountInvested.toFixed(2)}}</td>
+      <td>{{data.valueEndOfYear.toFixed(2)| currency}}</td>
+      <td>{{data.interest.toFixed(2)| currency}}</td>
+      <td>{{data.totalInterest.toFixed(2)| currency}}</td>
+      <td>{{data.totalAmountInvested.toFixed(2)| currency}}</td>
     </tr>
     }
   </tbody>

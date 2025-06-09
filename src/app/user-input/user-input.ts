@@ -1,11 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, output, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-export interface UserInputs {
-  initailInvestment: number;
-  anualContribution: number;
-  expectedReturn: number;
-  duration: number;
-}
+import { UserInputs } from '../../app.module';
+
 @Component({
   selector: 'app-user-input',
   imports: [FormsModule],
@@ -13,15 +9,26 @@ export interface UserInputs {
   styleUrl: './user-input.css',
 })
 export class UserInput {
-  @Output() calculate = new EventEmitter<UserInputs>();
-  userInputs: UserInputs = {
+  //@Output() calculate = new EventEmitter<UserInputs>(); //previous method use of decorator
+  // userInputs: UserInputs =  {
+  //   initailInvestment: 0,
+  //   anualContribution: 0,
+  //   expectedReturn: 0,
+  //   duration: 0,
+  // };
+  // Use of signal
+  userInputs = signal<UserInputs>({
     initailInvestment: 0,
     anualContribution: 0,
     expectedReturn: 0,
     duration: 0,
-  };
+  });
+  calculate = output<UserInputs>();
+
   onSubmit() {
-    this.calculate.emit(this.userInputs);
-    console.log(this.userInputs);
+    // this.calculate.emit(this.userInputs);//decorator use
+    //  this.calculate.emit(this.userInputs);
+    console.log(this.userInputs());
+    this.calculate.emit(this.userInputs());
   }
 }

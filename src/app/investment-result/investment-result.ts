@@ -1,18 +1,15 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
+import { InvestmentResults } from '../../app.module';
 
-export interface InvestmentResult {
-  year: number;
-  valueEndOfYear: number;
-  interest: number;
-  totalInterest: number;
-  totalAmountInvested: number;
-}
 @Component({
   selector: 'app-investment-result',
-  imports: [],
+  imports: [CurrencyPipe],
   templateUrl: './investment-result.html',
   styleUrl: './investment-result.css',
 })
 export class InvestmentResult {
-  @Input() result!: InvestmentResult[];
+  //previous Method
+  //@Input() result!: InvestmentResults[];
+  result = input<InvestmentResults[]>();
 }
