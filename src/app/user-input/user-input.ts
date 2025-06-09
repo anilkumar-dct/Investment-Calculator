@@ -1,6 +1,7 @@
 import { Component, EventEmitter, output, Output, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { UserInputs } from '../../app.module';
+import { InvestmentService } from '../investment';
 
 @Component({
   selector: 'app-user-input',
@@ -23,12 +24,13 @@ export class UserInput {
     expectedReturn: 0,
     duration: 0,
   });
-  calculate = output<UserInputs>();
-
+  // calculate = output<UserInputs>();
+  constructor(private investmentService: InvestmentService) {}
   onSubmit() {
+    this.investmentService.calculateInvestmentResults(this.userInputs());
     // this.calculate.emit(this.userInputs);//decorator use
-    //  this.calculate.emit(this.userInputs);
+    // this.calculate.emit(this.userInputs);
     console.log(this.userInputs());
-    this.calculate.emit(this.userInputs());
+    // this.calculate.emit(this.userInputs());
   }
 }
